@@ -1,0 +1,33 @@
+body{
+	background: lightblue;
+
+}
+.rTitle{
+	text-align: center;
+}
+h1{
+	color:black;
+	text-align: center;
+}
+.rpic{
+	width:100%;
+	height:auto;
+	text-align: center;
+	margin: auto;
+}
+.picWrapper{text-align: center;}
+img{margin:auto;}
+
+.rIngredients{
+	text-align: center;
+}
+
+.rInstructions{
+	text-align: center;
+}
+.alighnleft{
+	text-align: left;
+}
+.rtwitter{
+	text-align: center;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Food</title>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<div class="rTitle">
+				<h1>{{ iName }}</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class ="col-sm-2"></div>
+		<div class="col-sm-8">
+			<div class="picWrapper">
+			<div class="rPic">
+				<img src="{{iPic}}">
+			</div>
+		</div>
+		</div>
+		<div class ="col-sm-2"></div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class ="col-sm-2"></div>
+		<div class="col-sm-4">
+			<div class="rIngredients">
+				<h4>Inregients</h4>
+				<div class="alighnleft">
+					<ul>
+					    {% for x in iIngredients %} 
+                            <li>{{ x }}</li>
+                        {% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="rInstructions">
+				<h4>Instructions</h4>
+				<div class="alighnleft">
+					<ul>
+					    {% for y in iInstructions %} 
+                            <li>{{ y }}</li>
+                        {% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class ="col-sm-2"></div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<div class="rtwitter">
+				<p> {{ tweeterName }}</p>
+				<p> {{ tweeterText }}</p>
+				<p>	{{ tweeterDate }}</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
