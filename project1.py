@@ -46,7 +46,7 @@ doughnuts_inregient=["2 cups all-purpose flour","1/2 cup white sugar","1 teaspoo
 doughnuts_instruction=["Heat oil in deep-fryer to 375 degrees F (190 degrees C).", "In a large bowl, sift together flour, sugar, salt, baking powder, cinnamon and nutmeg. Mix in butter until crumbly. Stir in milk and egg until smooth. Knead lightly, then turn out onto a lightly floured surface. Roll or pat to 1/4 inch thickness. Cut with a doughnut cutter, or use two round biscuit cutters of different sizes.", "Carefully drop doughnuts into hot oil, a few at a time. Do not overcrowd pan or oil may overflow. Fry, turning once, for 3 minutes or until golden. Drain on paper towels."]
 doughnuts_website="https://www.allrecipes.com/recipe/43051/plain-cake-doughnuts/"
 
-cookie_name="Chocolate Chip Cookies"
+cookie_name="Cookies"
 cookie_picture="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F5960754.jpg&w=596&h=596&c=sc&poi=face&q=85"
 cookie_inregient=["1 cup butter, softened","1 cup white sugar","1 cup packed brown sugar","2 large eggs","2 teaspoons vanilla extract","1 teaspoon baking soda","2 teaspoons hot water","1/2 teaspoon salt","3 cups all-purpose flour","2 cups semisweet chocolate chips","1 cup chopped walnuts"]
 cookie_instruction=["Preheat oven to 350 degrees F (175 degrees C).", "Cream together the butter, white sugar, and brown sugar until smooth. Beat in the eggs one at a time, then stir in the vanilla. Dissolve baking soda in hot water. Add to batter along with salt. Stir in flour, chocolate chips, and nuts. Drop by large spoonfuls onto ungreased pans.", "Bake for about 10 minutes in the preheated oven, or until edges are nicely browned."]
