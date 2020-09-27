@@ -1,6 +1,7 @@
 import sys
 import os
 import flask
+from flask import Flask, request
 import random
 from tweepy import OAuthHandler
 from tweepy import API
@@ -26,12 +27,17 @@ auth = OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
 auth.set_access_token(twitter_access_token, twitter_access_token_secret)
 auth_api = API(auth)
 
+'''date_since'''
+date_since="2015-01-01"
+
+
 '''Search Spoonacular'''
+'''
 url = "https://api.spoonacular.com/recipes/search?apiKey={}".format(spoonacular_key)
 
 response = requests.get(url)
 json_body = response.json()
-'''Variables being that will store information to pass through the flask API'''
+#Variables being that will store information to pass through the flask API
 nameSP=""
 picSP=""
 linkSP=""
@@ -42,16 +48,14 @@ ingredientsSP=[]
 tweetText="NONE"
 tweetUserName="NONE"
 tweetDate="NONE"
-    
-
 
 foodId=(json.dumps(json_body["results"][0]["id"],indent=2))
 
-''' USE ID gathered from foodID API and then parse the information from the API and store it in variables declared above'''
+#USE ID gathered from foodID API and then parse the information from the API and store it in variables declared above
 url2 = "https://api.spoonacular.com/recipes/"+foodId+"/information?apiKey={}".format(spoonacular_key)
 response2 = requests.get(url2)
 json_body2 = response2.json()
-'''print(json.dumps(json_body2, indent=2))'''
+#print(json.dumps(json_body2, indent=2))
 for item in json_body2["extendedIngredients"]:
     ingredientsSP.append(item["original"]) 
     
@@ -65,7 +69,7 @@ linkSP=json_body2["spoonacularSourceUrl"]
 servingSizeSP=json_body2["servings"]
 prepTimeSP=json_body2["readyInMinutes"]
 
-'''make the title of recipe a hashtag'''
+#make the title of recipe a hashtag
 tweetname=nameSP.replace(" ","")
 tweetSearch="#"+tweetname
 
@@ -85,13 +89,80 @@ for tweet in tweets:
     tweetText=tweet.text
     tweetUserName=tweet.user.screen_name
     tweetDate=tweet.created_at
-    
+'''    
 
 app = flask.Flask(__name__)
-@app.route("/") # "Python decorator"
-def index():
 
-    return flask.render_template("index.html", iName = nameSP, iPic = picSP, iServing=servingSizeSP, iMinutes=prepTimeSP, iIngredients=ingredientsSP, iInstructions=instructionsSP, itweeterName=tweetUserName, itweeterText=tweetText, itweeterDate=tweetDate, iLink= linkSP,)
+
+@app.route('/',methods=['post','get'])
+def searchfood():
+    nameSP=""
+    picSP=""
+    linkSP=""
+    prepTimeSP=""
+    servingSizeSP=""
+    instructionsSP=[]
+    ingredientsSP=[]
+    tweetText="NONE"
+    tweetUserName="NONE"
+    tweetDate="NONE"
+    if request.method=='POST':
+        a=request.form.get('search')
+        url="https://api.spoonacular.com/recipes/complexSearch?query="+a+"&number=1&apiKey={}".format(spoonacular_key)
+        
+        response = requests.get(url)
+        json_body = response.json()
+        '''Variables being that will store information to pass through the flask API'''
+
+        
+        foodId=(json.dumps(json_body["results"][0]["id"],indent=2))
+        
+        ''' USE ID gathered from foodID API and then parse the information from the API and store it in variables declared above'''
+        url2 = "https://api.spoonacular.com/recipes/"+foodId+"/information?apiKey={}".format(spoonacular_key)
+        response2 = requests.get(url2)
+        json_body2 = response2.json()
+        '''print(json.dumps(json_body2, indent=2))'''
+        for item in json_body2["extendedIngredients"]:
+            ingredientsSP.append(item["original"]) 
+            
+        for instructOut in json_body2["analyzedInstructions"]:
+            for instructIn in instructOut["steps"]:
+                instructionsSP.append(instructIn["step"])
+                
+        nameSP=json_body2["title"]
+        picSP=json_body2["image"]
+        linkSP=json_body2["spoonacularSourceUrl"]
+        servingSizeSP=json_body2["servings"]
+        prepTimeSP=json_body2["readyInMinutes"]
+        
+        '''make the title of recipe a hashtag'''
+        tweetnameSearch=nameSP.replace(" ","")
+       
+        
+        print("*******************")
+        print(nameSP)
+        print(picSP)
+        print(linkSP)
+        print(servingSizeSP)
+        for x in ingredientsSP:
+            print(x)
+        for y in instructionsSP:
+            print(y)
+        print(tweetnameSearch)
+        
+        tweets=tweepy.Cursor(auth_api.search, q=tweetnameSearch, lang="en",since=date_since).items(1)
+        for tweet in tweets:
+            tweetText=tweet.text
+            tweetUserName=tweet.user.screen_name
+            tweetDate=tweet.created_at
+        if tweetText=='NONE':
+            tweets=tweepy.Cursor(auth_api.search, q=a, lang="en",since=date_since).items(1)
+            for tweet in tweets:
+                tweetText=tweet.text
+                tweetUserName=tweet.user.screen_name
+                tweetDate=tweet.created_at
+    return flask.render_template("index.html", iName = nameSP, iPic = picSP, iServing=servingSizeSP, iMinutes=prepTimeSP, iIngredients=ingredientsSP, iInstructions=instructionsSP, itweeterName=tweetUserName, itweeterText=tweetText, itweeterDate=tweetDate, iLink= linkSP)
+
 
 if __name__=='__main__':    
     app.run(
