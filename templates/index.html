@@ -12,6 +12,11 @@
 			<div class="rTitle">
 				<h1>{{ iName }}</h1>
 			</div>
+			<div class="rServingsize">
+				<h4>Serving Size {{ iServing }}</h4>
+				<br>
+				<h4>Minutes till Ready {{ iMinutes }}</h4>
+			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -60,9 +65,11 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="rtwitter">
-				<p> {{ tweeterName }}</p>
-				<p> {{ tweeterText }}</p>
-				<p>	{{ tweeterDate }}</p>
+				<p> {{ itweeterName }}</p>
+				<p> {{ itweeterText }}</p>
+				<p>	{{ itweeterDate }}</p>
+				<a href="{{ iLink }}">Source of Recipe</a>
+
 			</div>
 		</div>
 	</div>
