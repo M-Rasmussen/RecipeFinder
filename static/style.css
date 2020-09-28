@@ -1,12 +1,24 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
 body{
-	background: lightblue;
-
+	background-image: linear-gradient(to bottom right, #08f7fe, #fe53bb);
+	background-repeat: no-repeat;
+	background-size: auto;
 }
 .rTitle{
 	text-align: center;
 }
 h1{
-	color:black;
+	color: blue;
+	text-align: center;
+}
+.rServingsize{
+	text-align: center;
+	color:blue;
+}
+.rServingsize h4{
 	text-align: center;
 }
 .rpic{
@@ -20,14 +32,49 @@ img{margin:auto;}
 
 .rIngredients{
 	text-align: center;
+	background-color: white;
+	padding: 15px;
+	border-radius: 50px;
 }
 
 .rInstructions{
 	text-align: center;
+	background-color: white;
+	padding: 15px;
+	border-radius: 50px;
 }
 .alighnleft{
 	text-align: left;
 }
 .rtwitter{
 	text-align: center;
+	background-color: white;
+	padding: 15px;
+	border-radius: 50px;
+}
+.rtwitter p{
+	font-family: monospace;
+    font-size: large;
+    font-weight: 500;
+    color:#037A90;
+}
+.recipeLink{
+	text-align: center;
+	font-size: large;
+    font-family: cursive;
+    padding-bottom: 15px;
+
+}
+form{padding:15px;}
+a{
+	color:blue;
+}
+a:hover{
+	color:#037A90;
+}
+label{
+	color:blue;
+	font-size: large;
+    font-family: cursive;
+    padding-bottom: 15px
 }
