@@ -105,14 +105,12 @@ def searchfood():
                 tweetUserName=tweet.user.screen_name
                 tweetDate=tweet.created_at
             if tweetText=="NONE":
-                print("at COMBINED")
                 tweets=tweepy.Cursor(auth_api.search, q=tweetnameSearch, lang="en").items(1)
                 for tweet in tweets:
                     tweetText=tweet.text
                     tweetUserName=tweet.user.screen_name
                     tweetDate=tweet.created_at
                 if tweetText=="NONE":
-                    print("AT A")
                     tweets=tweepy.Cursor(auth_api.search, q=a, lang="en").items(1)
                     for tweet in tweets:
                         tweetText=tweet.text
