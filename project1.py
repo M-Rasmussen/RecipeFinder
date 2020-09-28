@@ -117,12 +117,13 @@ def searchfood():
                         tweetUserName=tweet.user.screen_name
                         tweetDate=tweet.created_at
             ###IF all was sucessfull return information to flask
-            return flask.render_template("index.html", iName = nameSP, iPic = picSP, iServing=servingSizeSP, iMinutes=prepTimeSP, iIngredients=ingredientsSP, iInstructions=instructionsSP, itweeterName=tweetUserName, itweeterText=tweetText, itweeterDate=tweetDate, iLink= linkSP)
+            return flask.render_template("index.html", iName = nameSP, iPic = picSP, iServing=servingSizeSP, iMinutes=prepTimeSP, iIngredients=ingredientsSP, iInstructions=instructionsSP, itweeterName=tweetUserName, itweeterText=tweetText, itweeterDate=tweetDate, iLink=linkSP )
         except:
             ##Try again with new recipe that was gained from the search, will repeate if gets here. 
             failCounter=failCounter+1
-            if failCounter>9:
+            if failCounter>5:
                 fAILSafty=1
+                return flask.render_template("failcase.html")
                 ##Fail safe to prevent endless loop, if it gets to this case then I should really make a 404 page but have not yet... EXTREME EDGE CASE THOUGH
 if __name__=='__main__':    
     app.run(
