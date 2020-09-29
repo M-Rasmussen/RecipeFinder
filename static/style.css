@@ -1,11 +1,11 @@
-html, body {
-    margin: 0;
-    height: 100%;
-}
+
 body{
-	background-image: linear-gradient(to bottom right, #08f7fe, #fe53bb);
-	background-repeat: no-repeat;
-	background-size: auto;
+    background-image: linear-gradient(to bottom right, #08f7fe, #fe53bb);
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .rTitle{
 	text-align: center;
