@@ -53,6 +53,7 @@ def searchfood():
     ################IF the user fills out the form
     
     if request.method=='POST':
+        ### call request api function
         a=request.form.get('search')
         urlSearch="https://api.spoonacular.com/recipes/complexSearch?query="+a+"&number=10&apiKey={}".format(spoonacular_key)
         responseSearch = requests.get(urlSearch)
