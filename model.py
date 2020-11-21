@@ -30,13 +30,49 @@ auth_api = API(auth)
 
 def itemSearch(a):
     #gets a list of items that contain that key word
-    urlSearch="https://api.spoonacular.com/recipes/complexSearch?query="+a+"&number=10&apiKey={}".format(spoonacular_key)
+    urlSearch="https://api.spoonacular.com/recipes/complexSearch?query="+a+"&number=5&apiKey={}".format(spoonacular_key)
     responseSearch = requests.get(urlSearch)
     json_bodySearch = responseSearch.json()
-    return json_bodySearch
+    ranNum=random.randint(0,4)
+    foodId=(json.dumps(json_bodySearch["results"][ranNum]["id"],indent=2))
+    return foodId
+    
 def itemRandom():
     #Gets of list of random items
-    urlRefresh="https://api.spoonacular.com/recipes/random?number=10&apiKey={}".format(spoonacular_key)
+    urlRefresh="https://api.spoonacular.com/recipes/random?number=5&apiKey={}".format(spoonacular_key)
     responseRefresh = requests.get(urlRefresh)
     json_bodyRefresh = responseRefresh.json()
-    return json_bodyRefresh
+    ranNum=random.randint(0,4)
+    foodId=(json.dumps(json_bodyRefresh["recipes"][ranNum]["id"],indent=2))
+    return foodId
+
+def getRecipe(foodId):
+    url2 = "https://api.spoonacular.com/recipes/"+foodId+"/information?apiKey={}".format(spoonacular_key)
+    response2 = requests.get(url2)
+    json_body2 = response2.json()
+    return json_body2
+
+def twitterCall(nameSP):
+    #Twitter Call Statemetns
+    tweetdict = {
+        "tweetText":"NONE",
+        "tweetUserName":"NONE",
+        "tweetDate":"NONE"
+        }
+    tweets=tweepy.Cursor(auth_api.search, q=nameSP, lang="en").items(1)
+    for tweet in tweets:
+        tweetdict["tweetText"]=tweet.text
+        tweetdict["tweetUserName"]=tweet.user.screen_name
+        tweetdict["tweetDate"]=tweet.created_at
+    if tweetdict["tweetText"]=="NONE":
+        tweetnameSearch=nameSP.replace(" ","")
+        tweets=tweepy.Cursor(auth_api.search, q=tweetnameSearch, lang="en").items(1)
+        for tweet in tweets:
+            tweetdict["tweetText"]=tweet.text
+            tweetdict["tweetUserName"]=tweet.user.screen_name
+            tweetdict["tweetDate"]=tweet.created_at
+    if tweetdict["tweetText"]=="NONE":
+        return "error"
+    return tweetdict
+
+    
