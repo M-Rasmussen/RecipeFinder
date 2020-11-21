@@ -1,59 +1,62 @@
-import sys
+'''Contorler class'''
 import os
 import flask
-from flask import Flask, request
-import random
-from tweepy import OAuthHandler
-from tweepy import API
-from tweepy import Cursor
-import tweepy
-import requests
-import json
-from os.path import join, dirname
-from dotenv import load_dotenv
+from flask import request
 import model as mod
 
 
 app = flask.Flask(__name__)
 
 
-@app.route('/',methods=['post','get'])
+@app.route("/", methods=["post", "get"])
 def searchfood():
-    ingredientsSP=[]
-    instructionsSP=[]
-    if request.method=='POST':
+    '''Search for food and return items'''
+    ingredients_sp = []
+    instructions_sp = []
+    if request.method == "POST":
         ### call request api function
-        a=request.form.get('search')
-        foodId=mod.itemSearch(a)
+        ans = request.form.get("search")
+        food_id = mod.item_search(ans)
     else:
-        foodId=mod.itemRandom()
-    
-    json_body2=mod.getRecipe(foodId)
-            #####USE ID gathered from foodID API and then parse the information from the API and store it in variables declared above
+        food_id = mod.item_random()
+
+    json_body2 = mod.get_recipe(food_id)
     for item in json_body2["extendedIngredients"]:
-        ingredientsSP.append(item["original"]) 
-        
-    for instructOut in json_body2["analyzedInstructions"]:
-        for instructIn in instructOut["steps"]:
-            instructionsSP.append(instructIn["step"])
-            
-    nameSP=json_body2["title"]
-    picSP=json_body2["image"]
-    linkSP=json_body2["spoonacularSourceUrl"]
-    servingSizeSP=json_body2["servings"]
-    prepTimeSP=json_body2["readyInMinutes"]
-    
-    tweeter=mod.twitterCall(nameSP)
-    
+        ingredients_sp.append(item["original"])
+
+    for instruct_out in json_body2["analyzedInstructions"]:
+        for instruct_in in instruct_out["steps"]:
+            instructions_sp.append(instruct_in["step"])
+
+    name_sp = json_body2["title"]
+    pic_sp = json_body2["image"]
+    link_sp = json_body2["spoonacularSourceUrl"]
+    serving_sizesp = json_body2["servings"]
+    prep_timesp = json_body2["readyInMinutes"]
+
+    tweeter = mod.twitter_call(name_sp)
+
     if tweeter != "error":
-        return flask.render_template("index.html", iName = nameSP, iPic = picSP, iServing=servingSizeSP, iMinutes=prepTimeSP, iIngredients=ingredientsSP, iInstructions=instructionsSP, itweeterName=tweeter["tweetUserName"], itweeterText=tweeter["tweetText"], itweeterDate=tweeter["tweetDate"], iLink=linkSP )
-    else:        
-        return flask.render_template("failcase.html")
-                ##Fail safe to prevent endless loop, if it gets to this case then I should really make a 404 page but have not yet... EXTREME EDGE CASE THOUGH
-if __name__=='__main__':    
+        return flask.render_template(
+            "index.html",
+            iName=name_sp,
+            iPic=pic_sp,
+            iServing=serving_sizesp,
+            iMinutes=prep_timesp,
+            iIngredients=ingredients_sp,
+            iInstructions=instructions_sp,
+            itweeterName=tweeter["tweetUserName"],
+            itweeterText=tweeter["tweetText"],
+            itweeterDate=tweeter["tweetDate"],
+            iLink=link_sp,
+        )
+    return flask.render_template("failcase.html")
+
+
+if __name__ == "__main__":
     app.run(
-    port=int(os.getenv('PORT', 8080)),
-    host=os.getenv('IP', '0.0.0.0'),
-    debug=True,
-    use_reloader=True
+        port=int(os.getenv("PORT", 8080)),
+        host=os.getenv("IP", "0.0.0.0"),
+        debug=True,
+        use_reloader=True,
     )
